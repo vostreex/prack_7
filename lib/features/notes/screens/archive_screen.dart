@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:prack_7/features/notes/models/note.dart';
 import 'package:prack_7/data/note_repository.dart';
 import 'edit_note_screen.dart';
-import 'add_note_screen.dart';
 import '../widgets/note_list_view.dart';
 import '../widgets/category_dropdown.dart';
 
-class NotesListScreen extends StatefulWidget {
-  const NotesListScreen({super.key});
+class ArchiveScreen extends StatefulWidget {
+  const ArchiveScreen({super.key});
 
   @override
-  _NotesListScreenState createState() => _NotesListScreenState();
+  _ArchiveScreenState createState() => _ArchiveScreenState();
 }
 
-class _NotesListScreenState extends State<NotesListScreen> {
+class _ArchiveScreenState extends State<ArchiveScreen> {
   final TextEditingController _controller = TextEditingController();
   List<Note> filteredNotes = [];
   String _selectedCategory = 'Все категории';
@@ -35,7 +33,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
             note.content.toLowerCase().contains(query);
         final matchesCategory = _selectedCategory == 'Все категории' ||
             note.category == _selectedCategory;
-        return matchesQuery && matchesCategory && !note.isArchived;
+        return matchesQuery && matchesCategory && note.isArchived;
       }).toList();
       _sortNotes();
     });
@@ -92,27 +90,13 @@ class _NotesListScreenState extends State<NotesListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Список заметок"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              context.pushReplacement('/settings');
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.archive),
-            onPressed: () {
-              context.push('/archive').then((_) => setState(() => _filterNotes()));
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.favorite),
-            onPressed: () {
-              context.push('/favorites').then((_) => setState(() => _filterNotes()));
-            },
-          ),
-        ],
+        title: const Text('Архив'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
@@ -125,7 +109,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
                   child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      labelText: 'Поиск заметок',
+                      labelText: 'Поиск архивированных заметок',
                       hintText: 'Введите запрос для поиска',
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
@@ -200,9 +184,14 @@ class _NotesListScreenState extends State<NotesListScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  context.push(
-                    '/edit/${filteredNotes[index].id}',
-                    extra: filteredNotes[index],
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditNoteScreen(
+                        index: filteredNotes[index].id,
+                        note: filteredNotes[index],
+                      ),
+                    ),
                   ).then((_) => setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,
@@ -210,16 +199,6 @@ class _NotesListScreenState extends State<NotesListScreen> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddNoteScreen()),
-          ).then((_) => setState(() => _filterNotes()));
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.blue,
       ),
     );
   }

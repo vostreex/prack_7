@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:prack_7/features/notes/models/note.dart';
+import 'package:prack_7/data/note_repository.dart';
 
 class NoteTile extends StatelessWidget {
   final Note note;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final VoidCallback onRefresh;
 
   const NoteTile({
     super.key,
     required this.note,
     required this.onTap,
     required this.onDelete,
+    required this.onRefresh,
   });
 
   @override
@@ -88,6 +91,46 @@ class NoteTile extends StatelessWidget {
               onTap: onTap,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
             ),
+          ),
+          IconButton(
+            icon: Icon(
+              note.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: note.isFavorite ? Colors.red : Colors.grey,
+              size: 24.0,
+            ),
+            onPressed: () {
+              NoteRepository.toggleFavorite(note.id);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    note.isFavorite
+                        ? 'Заметка удалена из избранного'
+                        : 'Заметка добавлена в избранное',
+                  ),
+                ),
+              );
+              onRefresh();
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              note.isArchived ? Icons.unarchive : Icons.archive,
+              color: Colors.blue[300],
+              size: 24.0,
+            ),
+            onPressed: () {
+              NoteRepository.toggleArchive(note.id);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    note.isArchived
+                        ? 'Заметка восстановлена из архива'
+                        : 'Заметка добавлена в архив',
+                  ),
+                ),
+              );
+              onRefresh();
+            },
           ),
           IconButton(
             icon: Icon(

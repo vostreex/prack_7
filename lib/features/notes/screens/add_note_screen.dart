@@ -26,90 +26,91 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-      child: ListView(
-        children: [
-          TextField(
-            controller: _titleController,
-            decoration: InputDecoration(
-              labelText: 'Заголовок',
-              hintText: 'Введите заголовок заметки',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Добавить заметку')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: ListView(
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                labelText: 'Заголовок',
+                hintText: 'Введите заголовок заметки',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                filled: true,
+                fillColor: Colors.grey[100],
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
               ),
-              filled: true,
-              fillColor: Colors.grey[100],
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 12.0,
-              ),
+              maxLength: 70,
             ),
-            maxLength: 70,
-          ),
-          const SizedBox(height: 20.0),
-          TextField(
-            controller: _contentController,
-            decoration: InputDecoration(
-              labelText: 'Содержимое',
-              hintText: 'Введите текст заметки',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
+            const SizedBox(height: 20.0),
+            TextField(
+              controller: _contentController,
+              decoration: InputDecoration(
+                labelText: 'Содержимое',
+                hintText: 'Введите текст заметки',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                filled: true,
+                fillColor: Colors.grey[100],
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
               ),
-              filled: true,
-              fillColor: Colors.grey[100],
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 12.0,
-              ),
+              maxLines: 5,
+              minLines: 3,
             ),
-            maxLines: 5,
-            minLines: 3,
-          ),
-          const SizedBox(height: 20.0),
-          CategoryDropdown(
-            value: _selectedCategory,
-            onChanged: (String? newValue) {
-              setState(() {
-                _selectedCategory = newValue!;
-              });
-            },
-          ),
-          const SizedBox(height: 24.0),
-          ElevatedButton(
-            onPressed: () {
-              final title = _titleController.text.trim();
-              final content = _contentController.text.trim();
-              if (title.isNotEmpty && content.isNotEmpty) {
-                NoteRepository.addNote(
-                  Note(
-                    title: title,
-                    content: content,
-                    category: _selectedCategory,
-                  ),
-                );
-                _titleController.clear();
-                _contentController.clear();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Заметка добавлена')),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Заполните оба поля')),
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              elevation: 2,
-              textStyle: const TextStyle(fontSize: 16.0),
+            const SizedBox(height: 20.0),
+            CategoryDropdown(
+              value: _selectedCategory,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedCategory = newValue!;
+                });
+              },
             ),
-            child: const Text('Добавить'),
-          ),
-        ],
+            const SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () {
+                final title = _titleController.text.trim();
+                final content = _contentController.text.trim();
+                if (title.isNotEmpty && content.isNotEmpty) {
+                  NoteRepository.addNote(
+                    Note(
+                      title: title,
+                      content: content,
+                      category: _selectedCategory,
+                    ),
+                  );
+                  _titleController.clear();
+                  _contentController.clear();
+                  Navigator.pop(context); // Navigate back to NotesListScreen
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Заполните оба поля')),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                elevation: 2,
+                textStyle: const TextStyle(fontSize: 16.0),
+              ),
+              child: const Text('Добавить'),
+            ),
+          ],
+        ),
       ),
     );
   }

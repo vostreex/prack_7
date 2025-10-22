@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -8,6 +10,12 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Настройки'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.replace('/notes');
+          },
+        ),
       ),
       body: ListView(
         children: [
@@ -21,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
               ),
             ),
-            title: const Text('Основыне настройки'),
+            title: const Text('Основные настройки'),
             onTap: () {
               // Handle tap
             },

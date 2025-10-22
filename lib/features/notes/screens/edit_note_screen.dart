@@ -4,7 +4,6 @@ import 'package:prack_7/data/note_repository.dart';
 
 import '../widgets/category_dropdown.dart';
 
-
 class EditNoteScreen extends StatefulWidget {
   final String index;
   final Note note;
@@ -42,6 +41,15 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_titleController.text),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: ListView(
@@ -103,6 +111,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       title: title,
                       content: content,
                       category: _selectedCategory,
+                      isFavorite: widget.note.isFavorite,
+                      isArchived: widget.note.isArchived,
                     ),
                   );
                   Navigator.pop(context);
