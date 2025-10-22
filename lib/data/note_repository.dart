@@ -1,22 +1,58 @@
-import '../features/notes/models/note.dart';
+import 'package:prack_7/features/notes/models/note.dart';
 
 class NoteRepository {
-  static final List<Note> _notes = [];
-
-  static List<Note> get notes => _notes;
+  static final List<Note> notes = [];
 
   static void addNote(Note note) {
-    _notes.add(note);
+    notes.add(note);
   }
 
   static void updateNote(String id, Note updatedNote) {
-    final index = _notes.indexWhere((note) => note.id == id);
+    final index = notes.indexWhere((note) => note.id == id);
     if (index != -1) {
-      _notes[index] = updatedNote;
+      notes[index] = Note(
+        id: id,
+        title: updatedNote.title,
+        content: updatedNote.content,
+        category: updatedNote.category,
+        creationDate: notes[index].creationDate,
+        isFavorite: notes[index].isFavorite,
+        isArchived: notes[index].isArchived,
+      );
     }
   }
 
   static void deleteNote(String id) {
-    _notes.removeWhere((note) => note.id == id);
+    notes.removeWhere((note) => note.id == id);
+  }
+
+  static void toggleFavorite(String id) {
+    final index = notes.indexWhere((note) => note.id == id);
+    if (index != -1) {
+      notes[index] = Note(
+        id: notes[index].id,
+        title: notes[index].title,
+        content: notes[index].content,
+        category: notes[index].category,
+        creationDate: notes[index].creationDate,
+        isFavorite: !notes[index].isFavorite,
+        isArchived: notes[index].isArchived,
+      );
+    }
+  }
+
+  static void toggleArchive(String id) {
+    final index = notes.indexWhere((note) => note.id == id);
+    if (index != -1) {
+      notes[index] = Note(
+        id: notes[index].id,
+        title: notes[index].title,
+        content: notes[index].content,
+        category: notes[index].category,
+        creationDate: notes[index].creationDate,
+        isFavorite: notes[index].isFavorite,
+        isArchived: !notes[index].isArchived,
+      );
+    }
   }
 }
