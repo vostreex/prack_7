@@ -114,6 +114,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
               ).then((_) => setState(() => _filterNotes()));
             },
           ),
+          //Реализация вертикальной маршрутизированной навигации с помощью метода push
           IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {
