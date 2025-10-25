@@ -98,6 +98,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
             Navigator.pop(context);
           },
         ),
+        //Реализация горизонтальной навигации с помощью метода pushReplacement
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
