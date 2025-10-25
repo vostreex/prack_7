@@ -11,6 +11,7 @@ import 'package:prack_7/features/notes/screens/splash_screen.dart';
 class AppRouter {
   late final GoRouter router = GoRouter(
     initialLocation: '/splash',
+
     routes: [
       GoRoute(
         path: '/splash',
