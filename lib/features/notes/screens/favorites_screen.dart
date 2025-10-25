@@ -92,6 +92,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Избранное'),
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
