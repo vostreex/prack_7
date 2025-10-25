@@ -27,7 +27,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Добавить заметку')),
+      appBar: AppBar(
+          title: const Text('Добавить заметку'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: ListView(
@@ -92,7 +100,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   );
                   _titleController.clear();
                   _contentController.clear();
-                  Navigator.pop(context); // Navigate back to NotesListScreen
+                  Navigator.pop(context);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Заполните оба поля')),
