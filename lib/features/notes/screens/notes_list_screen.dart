@@ -219,6 +219,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
           ],
         ),
       ),
+      //Вертикальной страничной навигации с помощью метода push
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
