@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prack_7/features/notes/models/note.dart';
 import 'package:prack_7/data/note_repository.dart';
+import 'package:prack_7/features/notes/screens/settings_screen.dart';
 import 'edit_note_screen.dart';
 import '../widgets/note_list_view.dart';
 import '../widgets/category_dropdown.dart';
@@ -97,6 +98,17 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              ).then((_) => setState(() => _filterNotes()));
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),

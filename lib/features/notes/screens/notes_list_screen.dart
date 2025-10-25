@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prack_7/features/notes/models/note.dart';
 import 'package:prack_7/data/note_repository.dart';
+import 'package:prack_7/features/notes/screens/archive_screen.dart';
+import 'package:prack_7/features/notes/screens/settings_screen.dart';
 import 'edit_note_screen.dart';
 import 'add_note_screen.dart';
 import '../widgets/note_list_view.dart';
@@ -97,13 +99,19 @@ class _NotesListScreenState extends State<NotesListScreen> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              context.pushReplacement('/settings');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              ).then((_) => setState(() => _filterNotes()));
             },
           ),
           IconButton(
             icon: const Icon(Icons.archive),
             onPressed: () {
-              context.push('/archive').then((_) => setState(() => _filterNotes()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ArchiveScreen()),
+              ).then((_) => setState(() => _filterNotes()));
             },
           ),
           IconButton(
