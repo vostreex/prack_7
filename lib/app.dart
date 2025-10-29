@@ -6,6 +6,7 @@ import 'shared/theme/app_theme.dart';
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
+
   final GoRouter _router = AppRouter().router;
   @override
   Widget build(BuildContext context) {
