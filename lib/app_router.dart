@@ -1,3 +1,4 @@
+// app_router.dart
 import 'package:go_router/go_router.dart';
 import 'package:prack_7_1/features/notes/screens/notes_list_screen.dart';
 import 'package:prack_7_1/features/notes/screens/add_note_screen.dart';
