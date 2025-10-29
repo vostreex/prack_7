@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNotes() async {
-
     await Future.delayed(const Duration(seconds: 2));
     context.go('/notes');
   }
