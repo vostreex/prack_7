@@ -3,11 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:prack_7_1/features/notes/models/note.dart';
 import 'package:prack_7_1/data/note_repository.dart';
 import 'package:prack_7_1/features/notes/screens/archive_screen.dart';
+import 'package:prack_7_1/features/notes/screens/favorites_screen.dart';
 import 'package:prack_7_1/features/notes/screens/settings_screen.dart';
-import 'edit_note_screen.dart';
 import 'add_note_screen.dart';
 import '../widgets/note_list_view.dart';
 import '../widgets/category_dropdown.dart';
+import 'edit_note_screen.dart';
 
 class NotesListScreen extends StatefulWidget {
   const NotesListScreen({super.key});
@@ -114,11 +115,13 @@ class _NotesListScreenState extends State<NotesListScreen> {
               ).then((_) => setState(() => _filterNotes()));
             },
           ),
-          //Реализация вертикальной маршрутизированной навигации с помощью метода push
           IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {
-              context.push('/favorites').then((_) => setState(() => _filterNotes()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FavoritesScreen()),
+              ).then((_) => setState(() => _filterNotes()));
             },
           ),
         ],
@@ -209,9 +212,14 @@ class _NotesListScreenState extends State<NotesListScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  context.push(
-                    '/edit/${filteredNotes[index].id}',
-                    extra: filteredNotes[index],
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditNoteScreen(
+                        index: filteredNotes[index].id,
+                        note: filteredNotes[index],
+                      ),
+                    ),
                   ).then((_) => setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,
@@ -220,7 +228,6 @@ class _NotesListScreenState extends State<NotesListScreen> {
           ],
         ),
       ),
-      //Вертикальной страничной навигации с помощью метода push
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
