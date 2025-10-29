@@ -99,30 +99,15 @@ class _NotesListScreenState extends State<NotesListScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              ).then((_) => setState(() => _filterNotes()));
-            },
+            onPressed: () => context.push('/settings'),
           ),
           IconButton(
             icon: const Icon(Icons.archive),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ArchiveScreen()),
-              ).then((_) => setState(() => _filterNotes()));
-            },
+            onPressed: () => context.push('/archive'),
           ),
           IconButton(
             icon: const Icon(Icons.favorite),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FavoritesScreen()),
-              ).then((_) => setState(() => _filterNotes()));
-            },
+            onPressed: () => context.push('/favorites'),
           ),
         ],
       ),
@@ -212,15 +197,8 @@ class _NotesListScreenState extends State<NotesListScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditNoteScreen(
-                        index: filteredNotes[index].id,
-                        note: filteredNotes[index],
-                      ),
-                    ),
-                  ).then((_) => setState(() => _filterNotes()));
+                  final note = filteredNotes[index];
+                  context.push('/edit/${note.id}', extra: note).then((_)=> setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,
               ),
@@ -230,10 +208,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddNoteScreen()),
-          ).then((_) => setState(() => _filterNotes()));
+          context.push('/add').then((_)=> setState(() => _filterNotes()));
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
