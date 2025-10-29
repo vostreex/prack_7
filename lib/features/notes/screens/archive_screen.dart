@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:prack_7_1/features/notes/models/note.dart';
 import 'package:prack_7_1/data/note_repository.dart';
 import 'package:prack_7_1/features/notes/screens/settings_screen.dart';
@@ -95,7 +96,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         actions: [
@@ -196,15 +197,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditNoteScreen(
-                        index: filteredNotes[index].id,
-                        note: filteredNotes[index],
-                      ),
-                    ),
-                  ).then((_) => setState(() => _filterNotes()));
+                  final note = filteredNotes[index];
+                  context.push('/edit/${note.id}', extra: note).then((_)=> setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,
               ),

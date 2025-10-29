@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:prack_7_1/features/notes/models/note.dart';
 import 'package:prack_7_1/data/note_repository.dart';
 
@@ -46,7 +47,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
       ),
@@ -115,8 +116,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       isArchived: widget.note.isArchived,
                     ),
                   );
-
-                  Navigator.pop(context);
+                  context.pop();
                 } else {
                   showDialog(
                     context: context,

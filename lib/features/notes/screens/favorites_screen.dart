@@ -95,8 +95,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-
-            Navigator.pop(context);
+            context.pop();
           },
         ),
       ),
@@ -186,15 +185,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditNoteScreen(
-                        index: filteredNotes[index].id,
-                        note: filteredNotes[index],
-                      ),
-                    ),
-                  ).then((_) => setState(() => _filterNotes()));
+                  final note = filteredNotes[index];
+                  context.push('/edit/${note.id}', extra: note).then((_)=> setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,
               ),
