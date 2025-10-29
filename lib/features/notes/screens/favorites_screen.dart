@@ -92,10 +92,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Избранное'),
-
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+
             Navigator.pop(context);
           },
         ),
@@ -186,9 +186,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 notes: filteredNotes,
                 onDelete: (index) => _deleteNote(filteredNotes[index].id),
                 onTap: (index) {
-                  context.push(
-                    '/edit/${filteredNotes[index].id}',
-                    extra: filteredNotes[index],
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditNoteScreen(
+                        index: filteredNotes[index].id,
+                        note: filteredNotes[index],
+                      ),
+                    ),
                   ).then((_) => setState(() => _filterNotes()));
                 },
                 onRefresh: _filterNotes,

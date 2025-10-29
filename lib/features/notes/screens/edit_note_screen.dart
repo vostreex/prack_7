@@ -115,6 +115,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       isArchived: widget.note.isArchived,
                     ),
                   );
+
                   Navigator.pop(context);
                 } else {
                   showDialog(

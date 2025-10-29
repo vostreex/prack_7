@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:prack_7_1/features/notes/screens/notes_list_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -12,9 +11,9 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Настройки'),
         leading: IconButton(
-          icon: const Icon(Icons.home),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.push('/notes');
+            Navigator.pop(context);
           },
         ),
       ),
