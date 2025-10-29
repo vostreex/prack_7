@@ -3,6 +3,7 @@ import 'package:prack_7_1/features/notes/models/note.dart';
 import 'package:prack_7_1/data/note_repository.dart';
 
 import '../widgets/category_dropdown.dart';
+import 'notes_list_screen.dart';
 
 
 class AddNoteScreen extends StatefulWidget {
@@ -100,7 +101,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   );
                   _titleController.clear();
                   _contentController.clear();
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NotesListScreen()),
+                  );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Заполните оба поля')),
