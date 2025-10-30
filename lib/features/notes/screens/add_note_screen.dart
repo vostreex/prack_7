@@ -102,7 +102,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   );
                   _titleController.clear();
                   _contentController.clear();
-                  context.pushReplacementNamed('notes');
+                  context.pushReplacement('/notes');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Заполните оба поля')),
